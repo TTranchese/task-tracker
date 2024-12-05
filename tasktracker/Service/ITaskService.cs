@@ -2,13 +2,13 @@ namespace tasktracker
 {
     public interface ITaskService
     {
-        public WorkItem AddTask(string workItemName);
+        public WorkItem AddTask(string workItemDesc);
 
-        public WorkItem CompleteTask(string id);
+        public WorkItem ChangeStatusTask(int id, StatusEnum statusEnum);
 
         public IEnumerable<WorkItem> ListAllTasks();
 
-        public void RemoveTask(string id);
-        public WorkItem GetWorkItem(string id);
+        public WorkItem? RemoveTask(int id);
+
     }
 }

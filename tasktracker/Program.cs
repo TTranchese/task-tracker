@@ -22,7 +22,7 @@ switch(args[0]) {
         break;
     case "--complete":
     case "-c":
-        _taskService.CompleteTask(args[1]);
+        _taskService.ChangeStatusTask(args[1]);
         break;
     case "--help":
     case "-h":

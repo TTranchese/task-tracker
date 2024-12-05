@@ -4,12 +4,24 @@ namespace tasktracker
 {
     public class TaskService(IEnumerable<WorkItem> tasks) : ITaskService
     {
-        public int GetLastestWorkItemId() => tasks.LastOrDefault()?.Id ?? 0;
-        public void SaveWorkItem(WorkItem workItem)
+        private int GetLastestWorkItemId() => tasks.LastOrDefault()?.Id ?? 0;
+        private void SaveWorkItem(WorkItem workItem)
         {
             string jsonDocument = JsonSerializer.Serialize(tasks);
             var newTasks = tasks.Append(workItem);
             File.WriteAllText("work-items.json", JsonSerializer.Serialize(newTasks));
+        }
+        private void SaveWorkItems(IEnumerable<WorkItem> workItems)
+        {
+            foreach (var workItem in workItems)
+            {
+                SaveWorkItem(workItem);
+            }
+        }
+
+        private WorkItem? FindWorkItem(int id)
+        {
+            return tasks.Where(task => task.Id == id).FirstOrDefault();
         }
         public WorkItem AddTask(string workItemName)
         {
@@ -18,32 +30,26 @@ namespace tasktracker
             return workItem;
         }
 
-        public WorkItem CompleteTask(string id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public WorkItem GetWorkItem(string id)
+        public IEnumerable<WorkItem> ListAllTasks()
         {
-            throw new NotImplementedException();
-        }
-
-        public void ListAllTasks()
-        {
-            Console.Clear();
             Console.WriteLine("All Tasks:");
             foreach (var task in tasks)
             {
                 Console.WriteLine($"{task.Id} - {task.Description} - {task.Status} - {task.CreatedAt} - {task.UpdatedAt}");
             }
+            return tasks;
         }
 
-        public void RemoveTask(string id)
+        public WorkItem? RemoveTask(int id)
         {
-            throw new NotImplementedException();
+            var taskToRemove = FindWorkItem(id);
+            var removedTaskList = tasks.Where(task => task.Id != id);
+            SaveWorkItems(removedTaskList);
+            return taskToRemove;
         }
 
-        IEnumerable<WorkItem> ITaskService.ListAllTasks()
+        public WorkItem ChangeStatusTask(int id, StatusEnum statusEnum)
         {
             throw new NotImplementedException();
         }

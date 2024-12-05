@@ -5,12 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "tasktracker",
+            "name": "add",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/tasktracker/bin/Debug/net9.0/tasktracker.dll",
             "args": ["-a", "prova"],
+            "cwd": "${workspaceFolder}/tasktracker",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "list",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/tasktracker/bin/Debug/net9.0/tasktracker.dll",
+            "args": ["-l"],
             "cwd": "${workspaceFolder}/tasktracker",
             "stopAtEntry": false,
             "console": "internalConsole"
