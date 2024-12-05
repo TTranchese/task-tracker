@@ -1,11 +1,12 @@
 ﻿using System.Text.Json;
 using tasktracker;
-if (!File.Exists("work-items.json"))
+var filePath = "work-items.json";
+if (!File.Exists(filePath))
 {
-    File.WriteAllText("work-items.json", "[]");
+    File.WriteAllText(filePath, "[]");
 }
 var tasks = JsonSerializer.Deserialize<IEnumerable<WorkItem>>(File.ReadAllText("work-items.json"));
-var _taskService = new TaskService(tasks);
+var _taskService = new TaskService(tasks, filePath);
 
 switch(args[0]) {
     case "--list":
@@ -22,7 +23,7 @@ switch(args[0]) {
         break;
     case "--complete":
     case "-c":
-        _taskService.ChangeStatusTask(args[1]);
+        _taskService.ChangeStatusTask(args[1], args[2]);
         break;
     case "--help":
     case "-h":

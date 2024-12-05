@@ -25,6 +25,17 @@
             "cwd": "${workspaceFolder}/tasktracker",
             "stopAtEntry": false,
             "console": "internalConsole"
+        },
+        {
+            "name": "remove",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/tasktracker/bin/Debug/net9.0/tasktracker.dll",
+            "args": ["-r", "2"],
+            "cwd": "${workspaceFolder}/tasktracker",
+            "stopAtEntry": false,
+            "console": "internalConsole"
         }
     ]
 }

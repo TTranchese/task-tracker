@@ -1,17 +1,18 @@
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace tasktracker
 {
-    public class TaskService(IEnumerable<WorkItem> tasks) : ITaskService
+    public class TaskService(IEnumerable<WorkItem> tasks, string filePath) : ITaskService
     {
-        private int GetLastestWorkItemId() => tasks.LastOrDefault()?.Id ?? 0;
-        private void SaveWorkItem(WorkItem workItem)
+        public int GetLastestWorkItemId() => tasks.AsQueryable().OrderBy(x => x.Id).LastOrDefault()?.Id ?? 0;
+        public void SaveWorkItem(WorkItem workItem)
         {
-            string jsonDocument = JsonSerializer.Serialize(tasks);
             var newTasks = tasks.Append(workItem);
-            File.WriteAllText("work-items.json", JsonSerializer.Serialize(newTasks));
+            File.WriteAllText(filePath, JsonSerializer.Serialize(newTasks));
         }
-        private void SaveWorkItems(IEnumerable<WorkItem> workItems)
+
+        public void SaveWorkItems(IEnumerable<WorkItem> workItems)
         {
             foreach (var workItem in workItems)
             {
@@ -19,9 +20,9 @@ namespace tasktracker
             }
         }
 
-        private WorkItem? FindWorkItem(int id)
+        public WorkItem? FindWorkItem(int id)
         {
-            return tasks.Where(task => task.Id == id).FirstOrDefault();
+            return tasks.Where(task => task.Id == id).FirstOrDefault() ?? null;
         }
         public WorkItem AddTask(string workItemName)
         {
@@ -41,15 +42,15 @@ namespace tasktracker
             return tasks;
         }
 
-        public WorkItem? RemoveTask(int id)
+        public WorkItem? RemoveTask(string id)
         {
-            var taskToRemove = FindWorkItem(id);
-            var removedTaskList = tasks.Where(task => task.Id != id);
+            var taskToRemove = FindWorkItem(Int32.Parse(id));
+            var removedTaskList = tasks.Where(task => task.Id != taskToRemove.Id).ToList();
             SaveWorkItems(removedTaskList);
             return taskToRemove;
         }
 
-        public WorkItem ChangeStatusTask(int id, StatusEnum statusEnum)
+        public WorkItem ChangeStatusTask(string id, string status)
         {
             throw new NotImplementedException();
         }
