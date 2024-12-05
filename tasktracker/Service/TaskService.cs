@@ -4,13 +4,17 @@ namespace tasktracker
 {
     public class TaskService(IEnumerable<WorkItem> tasks) : ITaskService
     {
-        public int GetLastestWorkItemId() => tasks.Last()?.Id ?? 1;
-        public void SaveTasks() => File.WriteAllText("tasks.json", JsonSerializer.Serialize(tasks));
+        public int GetLastestWorkItemId() => tasks.LastOrDefault()?.Id ?? 0;
+        public void SaveWorkItem(WorkItem workItem)
+        {
+            string jsonDocument = JsonSerializer.Serialize(tasks);
+            var newTasks = tasks.Append(workItem);
+            File.WriteAllText("work-items.json", JsonSerializer.Serialize(newTasks));
+        }
         public WorkItem AddTask(string workItemName)
         {
-            var workItem = new WorkItem { Id = GetLastestWorkItemId() + 1, Name = workItemName };
-            _ = tasks.Append(workItem);
-            SaveTasks();
+            var workItem = new WorkItem { Id = GetLastestWorkItemId() + 1, Description = workItemName };
+            SaveWorkItem(workItem);
             return workItem;
         }
 
@@ -30,7 +34,7 @@ namespace tasktracker
             Console.WriteLine("All Tasks:");
             foreach (var task in tasks)
             {
-                Console.WriteLine($"{task.Id} - {task.Name} - {task.IsComplete}");
+                Console.WriteLine($"{task.Id} - {task.Description} - {task.Status} - {task.CreatedAt} - {task.UpdatedAt}");
             }
         }
 

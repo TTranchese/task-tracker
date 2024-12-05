@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/tasktracker/bin/Debug/net9.0/tasktracker.dll",
-            "args": [],
+            "args": ["-a", "prova"],
             "cwd": "${workspaceFolder}/tasktracker",
             "stopAtEntry": false,
             "console": "internalConsole"

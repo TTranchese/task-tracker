@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
 using tasktracker;
-if (!File.Exists("tasks.json"))
+if (!File.Exists("work-items.json"))
 {
-    File.WriteAllText("tasks.json", "[]");
+    File.WriteAllText("work-items.json", "[]");
 }
-var tasks = JsonSerializer.Deserialize<IEnumerable<WorkItem>>(File.ReadAllText("tasks.json"));
+var tasks = JsonSerializer.Deserialize<IEnumerable<WorkItem>>(File.ReadAllText("work-items.json"));
 var _taskService = new TaskService(tasks);
 
 switch(args[0]) {
