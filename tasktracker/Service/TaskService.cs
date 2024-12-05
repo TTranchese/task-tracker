@@ -52,7 +52,15 @@ namespace tasktracker
 
         public WorkItem ChangeStatusTask(string id, string status)
         {
-            throw new NotImplementedException();
+            var task = FindWorkItem(int.Parse(id));
+            if (task == null)
+            {
+                Console.Out.WriteLine("Task not found");
+                return new WorkItem(){Description = "Empty"};
+            }
+            task.Status = Enum.Parse<StatusEnum>(status);
+            SaveWorkItem(task);
+            return task;
         }
     }
 }

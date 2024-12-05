@@ -36,6 +36,28 @@
             "cwd": "${workspaceFolder}/tasktracker",
             "stopAtEntry": false,
             "console": "internalConsole"
+        },
+        {
+            "name": "help",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/tasktracker/bin/Debug/net9.0/tasktracker.dll",
+            "args": ["-h"],
+            "cwd": "${workspaceFolder}/tasktracker",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "change",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/tasktracker/bin/Debug/net9.0/tasktracker.dll",
+            "args": ["-c", "2", "Done"],
+            "cwd": "${workspaceFolder}/tasktracker",
+            "stopAtEntry": false,
+            "console": "internalConsole"
         }
     ]
 }

@@ -22,7 +22,7 @@ https://roadmap.sh/projects/task-tracker
 1. Clone the repository:
     ```sh
     git clone https://github.com/TTranchese/task-tracker.git
-    cd task-tracker
+    cd tasktracker
     ```
 
 2. Build the project:
